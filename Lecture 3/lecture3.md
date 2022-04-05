@@ -75,5 +75,25 @@ class Array():
     - Append(x): $\theta(x)$
   - What do linked lists do well:
     - Insert into the middle of a list
-    - Guarantee that the nodes in a link list never move in memory.
+    - Guarantee that the of the time the nodes in a link list never move in memory.
     - These situations don't really come up in algorithims.
+- Vectors: Vectors are lists in Python
+  - It's pretty much an array that can grow quickly.
+  - Amortized Anaysis: The average time analysis, rather than best or worst case.
+    - Example: Inrememnting a binary number.
+      - Algorithim:
+      1. Go to last bit,
+      2. Look at the current bit,
+      3. If it's 0 flip it to 1 and exit.
+      4. If it's 1 flip it to 0.
+      5. Go to Step 2.
+    - Worst case $O(n)$, best case is $O(1)$
+    - Half te time, the last digit will be 0.
+    - 1/4 of the time the second to last digit will be 0.
+    - 1/8th of the time the third to last digit will be 0.
+    - $$\sum_{i=1}^\log(n) \frac {in} {2^i} = O(n)$$
+    - So count runs in amortized time: $O(i)$
+    - Efficiency
+      - Create(n) : $\theta(n)$
+      - Lookup(i) : $\theta(1)$
+      - Append(x) : $\theta(1)$ ammortized
