@@ -1,7 +1,7 @@
 ## Lecture 6 - Divide and Conquer
 ---
 ### Midterm stuff
-- Next Thursday
+- **Next Thursday**
 - On paper
 - One sheet of notes allowed, no calculator/computers
 - Maybe about 10 quesitons, we'll go over it next Tuesday
@@ -85,7 +85,7 @@ def merge(l1,l2):
             sorted.append[l2[j]]
             j+= 1
     # This last line is too clever for it's own good.
-    # It's too dangerous to be left alive, we must kill it Jim.
+    # It's too dangerous to be left alive.
     return sorted + l1[i:] + l2[j:]
 ```
 - input size `n = len(l1) + len(l2)`
@@ -127,4 +127,39 @@ def mergesort(l):
 - Some ways to mitigate: 
   - pick 3 pivots (start,mid,end)
   - pick a random pivot
-  - 
+---
+### Multiplication
+- GIven two n bit number a and b
+  - O(n^2)
+- Think of a and b as lists of bits
+- Can add two number x + y in $\theta(n)$ time.
+- Algorithim
+  - start at the last of a (lets call it a_0)
+  - let the output c = 0
+  - for i in {0...n}
+    - if a_i = 0 then there's no contribution
+    - if a_i = 1, then we add a copy of b shifted over i bits
+      - c = c + (b << 1)
+- Instead, we're going to split the bits in half
+  - `a = a[:n//2] + a[n//2:]`
+  -  if a = 81 = b10110101, then
+     -  a_h = 11 = b1011
+     -  a_l = 5 = b0101
+     -  a = 11 · 24 + 5
+  -  $$ a · b = (a_h2^{n/2} + a_l ) · (b_h2^{n/2} + b_l )$$
+  -  Foil it, I'm not going to type that out, it's in the slides.
+  -  Unfortunately this doesn't help much.
+  -  Let's look at $(a_h + a_l)(b_h+b_l)$
+  - Useful Algorithim:
+    - $c_1 = a_h * b_h$
+    - $c_3 = a_l * b_l$
+    - $c_2 = (a_h + a_l) * (b_h +b_l) - (c_1 + c_3)$
+    - return $c_12^n +c_22^{\frac n 2} + c_3$
+  - We're going to go over multiplying matrices, but my brain is fried. #dealwithit
+
+---
+### Convex Hull pt 2 - The Hull returns
+- When we did it in HW1 it was $O(n^3)$
+- We can do it mo betta
+  - The left most, right most, top and bottom points are on the convex hull.
+  - if any point p is on the interior of a trinagle of points in our set, then p isn't on the convex hull.
