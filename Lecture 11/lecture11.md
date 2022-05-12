@@ -1,0 +1,71 @@
+## Lecture 11 - More dynamic programming
+--- 
+### Weighted digraphs
+- let w(u,v) be the weight of the ege (u,v) if (u,v) $\set$ blah blah blah get this later
+- Negative weight cycles can result in $-\inf$ total weight. Will be an infinite loop
+- First lets start with BFS
+  - Doesn't work
+  - Doesn't account for weight
+- **Triangle Theorem: For any unweighted graph let d(u,v) be the ength of the shortest path from u to v. Then for any vertices u,v,w, d(u,w) =< d(u,v) + d(v,w)**
+- But there is another way
+- DAGs
+  - topologically sort the vertices
+  - keeep a table of the distance from the source to every vertex. d[u] is the distance from source to u.
+  - loop through the vertices in topological order
+    - if $d[u] + w(u,v) < d[w]$ then update $d[v]$
+      - Example:
+        - Topological sorted: [a,b,c,d]
+        - Table:
+          - d[a] == 0
+          - d[b] == inf
+          - d[c] == inf
+          - d[d] == inf
+        - so we need to find the distance from a - b
+        - Lets look at all the neighbors
+        - d[a] + w(a,b) == 0 + 3
+          - d[b] == 3
+        - d[a] + w(a,c) == 0 + 1
+          - d[c] == 1
+        - d[b] + w(b,d) == 3 + 2
+          - d[d] == 5
+        - d[c] + w(c,d) == 1 + 2
+        - d[d] == 3
+  - Running time $O(V+E)$
+---
+### Connected Components
+- Given an adjacenty matrix A, we want to compute a matrix T, where T[u][v] is 1 iff there's a path from u to v in G (the graph).
+  - G =
+    - 0 1 0 0 0
+    - 1 0 1 0 0
+    - 0 1 0 0 0
+    - 0 0 0 0 1
+    - 0 0 0 1 0
+  - T =
+    - 1 1 1 0 0
+    - 1 1 1 0 0
+    - 1 1 1 0 0
+    - 0 0 0 1 1
+    - 0 0 0 1 1
+- **If T[u][w] = 1 (there's a path from u to w). If T[w][v] = 1, then there must be a oath from u all the way to v.**
+- Construct $T^0$ = A
+- $T^{i+1}[u][v] == 1$
+- $T^i[u][v] == 1$ or
+- $T^i[u][w] == 1$ and $T[w][v] == 1$
+- Repeat for all w in $|V|$
+- **This is Warshall's algorithim**
+- $O(v^3)$
+
+---
+### All Source shortest paths
+- Instead of having T^i[u][v] remember if there's a path from u to v. We have D^i[u][v] remember the distance from u to v for any path of length i or less.
+- **Floyd's Algorithim**
+- Still runs in O(v^3) time like Warshall's.
+---
+### Longest common Substring
+- Given "abcabbac" and "caabcaba" what s the longest common substring?
+  - This case is "abcab"
+- Let's write an algo for it! (That's...why I'm here)
+- Table T where 
+  - $$T[i][j] = n$$
+  - Then
+  - $$s[i-n:i] = t[j-n:j] $$
