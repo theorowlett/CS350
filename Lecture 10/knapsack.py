@@ -22,9 +22,9 @@ def knapsack_memo(items,cap,memos):
     maxVal = 0
     for (val,weight) in items:
         if cap >= weight:
-            val = recursive_knapsack(items, cap-weight, memos) + val
-    maxVal = max(maxVal,val)
-    memos[cap] = maxVal
+            val = knapsack_memo(items, cap-weight, memos) + val
+        maxVal = max(maxVal,val)
+        memos[cap] = maxVal
     return maxVal
 
     
